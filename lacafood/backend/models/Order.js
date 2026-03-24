@@ -18,6 +18,7 @@ const orderSchema = new mongoose.Schema({
     enum: ['pending', 'confirmed', 'preparing', 'delivering', 'completed', 'cancelled'],
     default: 'pending'
   },
+  shipper: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   address: { type: String, required: true },
   phone: { type: String, required: true }
 }, { timestamps: true });

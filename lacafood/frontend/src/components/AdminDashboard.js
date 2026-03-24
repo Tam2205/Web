@@ -25,7 +25,10 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('foods');
   const [foods, setFoods] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [shippers, setShippers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [shipperForm, setShipperForm] = useState({ name: '', email: '', password: '', phone: '' });
+  const [shipperError, setShipperError] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -34,12 +37,14 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [foodsRes, ordersRes] = await Promise.all([
+      const [foodsRes, ordersRes, shippersRes] = await Promise.all([
         API.get('/foods'),
-        API.get('/orders')
+        API.get('/orders'),
+        API.get('/orders/shippers')
       ]);
       setFoods(foodsRes.data);
       setOrders(ordersRes.data);
+      setShippers(shippersRes.data);
     } catch (err) {
       console.error('Error fetching admin data:', err);
     }
@@ -65,6 +70,28 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleAddShipper = async (e) => {
+    e.preventDefault();
+    setShipperError('');
+    try {
+      const res = await API.post('/orders/shippers', shipperForm);
+      setShippers([...shippers, { ...res.data, activeDeliveries: 0, completedDeliveries: 0 }]);
+      setShipperForm({ name: '', email: '', password: '', phone: '' });
+    } catch (err) {
+      setShipperError(err.response?.data?.msg || 'Lỗi khi thêm shipper');
+    }
+  };
+
+  const handleDeleteShipper = async (id) => {
+    if (!window.confirm('Bạn có chắc muốn xóa shipper này?')) return;
+    try {
+      await API.delete(`/orders/shippers/${id}`);
+      setShippers(shippers.filter(s => s._id !== id));
+    } catch (err) {
+      alert(err.response?.data?.msg || 'Lỗi khi xóa shipper');
+    }
+  };
+
   if (loading) return <div className="loading">Đang tải...</div>;
 
   return (
@@ -84,6 +111,12 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab('orders')}
           >
             📦 Quản lý đơn hàng ({orders.length})
+          </button>
+          <button
+            className={`admin-tab ${activeTab === 'shippers' ? 'active' : ''}`}
+            onClick={() => setActiveTab('shippers')}
+          >
+            🚚 Nhân viên giao hàng ({shippers.length})
           </button>
         </div>
 
@@ -169,6 +202,9 @@ const AdminDashboard = () => {
                     </div>
                     <div className="order-customer">
                       <p>👤 {order.user?.name || 'N/A'} | 📞 {order.phone} | 📍 {order.address}</p>
+                      {order.shipper && (
+                        <p className="order-shipper-info">🚚 Shipper: {order.shipper.name} {order.shipper.phone ? `| 📞 ${order.shipper.phone}` : ''}</p>
+                      )}
                     </div>
                     <div className="order-items">
                       {order.items.map((item, idx) => (
@@ -189,6 +225,83 @@ const AdminDashboard = () => {
                   </div>
                 ))
               )}
+            </div>
+          </div>
+        )}
+        {activeTab === 'shippers' && (
+          <div className="admin-section">
+            <h2>Thêm nhân viên giao hàng</h2>
+            {shipperError && <div className="error-msg">{shipperError}</div>}
+            <form className="shipper-form" onSubmit={handleAddShipper}>
+              <div className="shipper-form-grid">
+                <input
+                  type="text"
+                  placeholder="Tên nhân viên *"
+                  value={shipperForm.name}
+                  onChange={(e) => setShipperForm({ ...shipperForm, name: e.target.value })}
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="Email đăng nhập *"
+                  value={shipperForm.email}
+                  onChange={(e) => setShipperForm({ ...shipperForm, email: e.target.value })}
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="Mật khẩu *"
+                  value={shipperForm.password}
+                  onChange={(e) => setShipperForm({ ...shipperForm, password: e.target.value })}
+                  required
+                  minLength={6}
+                />
+                <input
+                  type="tel"
+                  placeholder="Số điện thoại"
+                  value={shipperForm.phone}
+                  onChange={(e) => setShipperForm({ ...shipperForm, phone: e.target.value })}
+                />
+              </div>
+              <button type="submit" className="add-btn">+ Thêm shipper</button>
+            </form>
+
+            <h2 style={{ marginTop: '30px' }}>Danh sách nhân viên giao hàng</h2>
+            <div className="admin-table-wrapper">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Tên</th>
+                    <th>Email</th>
+                    <th>SĐT</th>
+                    <th>Đang giao</th>
+                    <th>Đã hoàn thành</th>
+                    <th>Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shippers.length === 0 ? (
+                    <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>Chưa có nhân viên giao hàng</td></tr>
+                  ) : (
+                    shippers.map(s => (
+                      <tr key={s._id}>
+                        <td><strong>{s.name}</strong></td>
+                        <td>{s.email}</td>
+                        <td>{s.phone || '—'}</td>
+                        <td>
+                          <span className={`badge ${s.activeDeliveries > 0 ? 'badge-promo' : 'badge-available'}`}>
+                            {s.activeDeliveries} đơn
+                          </span>
+                        </td>
+                        <td>{s.completedDeliveries} đơn</td>
+                        <td>
+                          <button onClick={() => handleDeleteShipper(s._id)} className="delete-btn">🗑️</button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         )}

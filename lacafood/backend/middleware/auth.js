@@ -23,4 +23,11 @@ const admin = (req, res, next) => {
   next();
 };
 
-module.exports = { auth, admin };
+const shipper = (req, res, next) => {
+  if (req.user.role !== 'shipper') {
+    return res.status(403).json({ msg: 'Chỉ shipper mới được truy cập' });
+  }
+  next();
+};
+
+module.exports = { auth, admin, shipper };
