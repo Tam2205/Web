@@ -4,14 +4,14 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
 const categories = [
-  { key: 'mon-nhau', label: 'Món Nhậu' },
-  { key: 'tra-sua', label: 'Trà Sữa' },
-  { key: 'chien', label: 'Chiên' },
-  { key: 'pho-bun', label: 'Phở & ún'},
-  { key: 'com', label: 'Cơm' },
-  { key: 'mon-an-vat', label: 'Món Ăn Vặt' },
-  { key: 'nuoc', label: 'Nước' },
-  { key: 'lau', label: 'Lẩu' }
+  { key: 'mon-nhau', label: 'Món Nhậu', icon: '🍗' },
+  { key: 'tra-sua', label: 'Trà Sữa', icon: '🧋' },
+  { key: 'chien', label: 'Chiên', icon: '🍟' },
+  { key: 'pho-bun', label: 'Phở & Bún', icon: '🍜' },
+  { key: 'com', label: 'Cơm', icon: '🍚' },
+  { key: 'mon-an-vat', label: 'Món Ăn Vặt', icon: '🍢' },
+  { key: 'nuoc', label: 'Nước', icon: '🥤' },
+  { key: 'lau', label: 'Lẩu', icon: '🍲' }
 ];
 
 const Navbar = () => {
@@ -48,7 +48,7 @@ const Navbar = () => {
             onMouseLeave={() => setMenuOpen(false)}
           >
             <Link to="/menu" className="nav-link" onClick={() => setMobileOpen(false)}>
-              Thuc don ▾
+              Thực đơn ▾
             </Link>
             {menuOpen && (
               <div className="dropdown-menu">
@@ -64,13 +64,12 @@ const Navbar = () => {
                   >
                     {cat.icon} {cat.label}
                   </Link>
-                ))}
               </div>
             )}
           </div>
 
           <Link to="/cart" className="nav-link cart-link" onClick={() => setMobileOpen(false)}>
-            Giỏ hàng
+            🛒 Giỏ hàng
             {getItemCount() > 0 && <span className="cart-badge">{getItemCount()}</span>}
           </Link>
 
@@ -94,7 +93,7 @@ const Navbar = () => {
                     </Link>
                   )}
                   <button className="dropdown-item logout-btn" onClick={handleLogout}>
-                    Đăng xuất
+                    🚪 Đăng xuất
                   </button>
                 </div>
               )}
