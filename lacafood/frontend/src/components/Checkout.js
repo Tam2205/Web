@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import API from '../api/axios';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import DeliveryMap, { STORE_LOCATION } from './DeliveryMap';
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('vi-VN').format(price) + 'd';
+};
+
+// Haversine formula for straight-line distance (km)
+const haversineDistance = (lat1, lng1, lat2, lng2) => {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 };
 
 const Checkout = () => {
@@ -16,14 +28,90 @@ const Checkout = () => {
 
   const [address, setAddress] = useState(user?.address || '');
   const [phone, setPhone] = useState(user?.phone || '');
-  const [distance, setDistance] = useState('');
+  const [distance, setDistance] = useState(0);
+  const [deliveryCoords, setDeliveryCoords] = useState(null);
+  const [geocoding, setGeocoding] = useState(false);
+  const [geocodeError, setGeocodeError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [orderSuccess, setOrderSuccess] = useState(null);
 
+  const debounceRef = useRef(null);
+
+  // Geocode address → coordinates + calculate distance
+  const geocodeAddress = useCallback(async (addr) => {
+    if (!addr || addr.trim().length < 5) {
+      setDeliveryCoords(null);
+      setDistance(0);
+      setGeocodeError('');
+      return;
+    }
+
+    setGeocoding(true);
+    setGeocodeError('');
+
+    try {
+      const query = addr.includes('Hồ Chí Minh') || addr.includes('HCM') || addr.includes('TP.HCM')
+        ? addr
+        : addr + ', Hồ Chí Minh, Việt Nam';
+
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=vn`;
+      const res = await fetch(url, {
+        headers: { 'Accept-Language': 'vi' }
+      });
+      const data = await res.json();
+
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lng = parseFloat(data[0].lon);
+        setDeliveryCoords({ lat, lng });
+
+        // Try OSRM for road distance, fallback to Haversine
+        try {
+          const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${STORE_LOCATION.lng},${STORE_LOCATION.lat};${lng},${lat}?overview=false`;
+          const osrmRes = await fetch(osrmUrl);
+          const osrmData = await osrmRes.json();
+          if (osrmData.routes && osrmData.routes.length > 0) {
+            const roadDist = osrmData.routes[0].distance / 1000;
+            setDistance(Math.round(roadDist * 10) / 10);
+          } else {
+            setDistance(Math.round(haversineDistance(STORE_LOCATION.lat, STORE_LOCATION.lng, lat, lng) * 10) / 10);
+          }
+        } catch {
+          setDistance(Math.round(haversineDistance(STORE_LOCATION.lat, STORE_LOCATION.lng, lat, lng) * 10) / 10);
+        }
+        setGeocodeError('');
+      } else {
+        setDeliveryCoords(null);
+        setDistance(0);
+        setGeocodeError('Không tìm thấy địa chỉ. Vui lòng nhập chi tiết hơn (số nhà, đường, quận...)');
+      }
+    } catch (err) {
+      console.error('Geocoding error:', err);
+      setGeocodeError('Lỗi khi tìm địa chỉ. Vui lòng thử lại.');
+    }
+    setGeocoding(false);
+  }, []);
+
+  // Debounced address change
+  const handleAddressChange = (e) => {
+    const val = e.target.value;
+    setAddress(val);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      geocodeAddress(val);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
+
   const getShippingFee = () => {
-    const km = parseFloat(distance) || 0;
+    const km = distance || 0;
     if (km <= 5) return 0;
     return Math.ceil(km - 5) * 10000;
   };
@@ -48,8 +136,8 @@ const Checkout = () => {
       return;
     }
 
-    if (!distance || parseFloat(distance) <= 0) {
-      setError('Vui lòng nhập khoảng cách giao hàng');
+    if (!deliveryCoords) {
+      setError('Không tìm thấy tọa độ địa chỉ. Vui lòng nhập địa chỉ chi tiết hơn.');
       return;
     }
 
@@ -69,8 +157,10 @@ const Checkout = () => {
         paymentMethod,
         address: address.trim(),
         phone: phone.trim(),
-        distance: parseFloat(distance) || 0,
-        shippingFee: getShippingFee()
+        distance: distance || 0,
+        shippingFee: getShippingFee(),
+        deliveryLat: deliveryCoords?.lat || null,
+        deliveryLng: deliveryCoords?.lng || null
       });
 
       setOrderSuccess(res.data);
@@ -164,11 +254,13 @@ const Checkout = () => {
                 <label>Địa chỉ giao hàng *</label>
                 <textarea
                   value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Nhập địa chỉ chi tiết..."
+                  onChange={handleAddressChange}
+                  placeholder="Nhập địa chỉ chi tiết (số nhà, đường, quận, TP.HCM)..."
                   rows={2}
                   required
                 />
+                {geocoding && <small className="geocoding-hint">🔍 Đang tìm vị trí...</small>}
+                {geocodeError && <small className="geocode-error">{geocodeError}</small>}
               </div>
               <div className="form-group">
                 <label>Số điện thoại *</label>
@@ -180,24 +272,38 @@ const Checkout = () => {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label>Khoảng cách giao hàng (km) *</label>
-                <input
-                  type="number"
-                  min="0.1"
-                  step="0.1"
-                  value={distance}
-                  onChange={(e) => setDistance(e.target.value)}
-                  placeholder="Nhập khoảng cách (km)"
-                  required
-                />
-                <small className="shipping-hint">
-                  {!distance || parseFloat(distance) <= 5
-                    ? '🚚 Dưới 5km: Miễn phí giao hàng'
-                    : `🚚 Phí giao hàng: ${formatPrice(getShippingFee())} (${Math.ceil(parseFloat(distance) - 5)}km x 10.000đ)`
-                  }
-                </small>
-              </div>
+
+              {/* Auto-calculated distance info */}
+              {deliveryCoords && distance > 0 && (
+                <div className="distance-info-box">
+                  <div className="distance-result">
+                    <span className="distance-label">📏 Khoảng cách:</span>
+                    <span className="distance-value">{distance} km</span>
+                  </div>
+                  <div className="shipping-fee-result">
+                    <span>🚚 Phí giao hàng:</span>
+                    <span className={getShippingFee() === 0 ? 'free-shipping' : ''}>
+                      {getShippingFee() === 0
+                        ? 'Miễn phí (dưới 5km)'
+                        : `${formatPrice(getShippingFee())} (${Math.ceil(distance - 5)}km x 10.000đ)`
+                      }
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Delivery route map preview */}
+              {deliveryCoords && (
+                <div className="checkout-map-preview">
+                  <h3>🗺️ Quãng đường giao hàng</h3>
+                  <DeliveryMap
+                    customerLat={deliveryCoords.lat}
+                    customerLng={deliveryCoords.lng}
+                    customerAddress={address}
+                    height="250px"
+                  />
+                </div>
+              )}
             </div>
 
             <div className="form-section">
@@ -289,10 +395,10 @@ const Checkout = () => {
               <span>Phí giao hàng:</span>
               <span>{getShippingFee() > 0 ? formatPrice(getShippingFee()) : 'Miễn phí'}</span>
             </div>
-            {getShippingFee() > 0 && distance && (
+            {getShippingFee() > 0 && distance > 0 && (
               <div className="summary-row shipping-detail">
-                <span>({parseFloat(distance)}km - miễn phí 5km đầu)</span>
-                <span>{Math.ceil(parseFloat(distance) - 5)}km x 10.000đ</span>
+                <span>({distance}km - miễn phí 5km đầu)</span>
+                <span>{Math.ceil(distance - 5)}km x 10.000đ</span>
               </div>
             )}
             <div className="summary-row total">
