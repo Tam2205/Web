@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../api/axios';
+import DeliveryMap from './DeliveryMap';
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('vi-VN').format(price) + 'd';
