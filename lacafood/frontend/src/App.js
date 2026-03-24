@@ -12,6 +12,7 @@ import OrderHistory from './components/OrderHistory';
 import AdminDashboard from './components/AdminDashboard';
 import AdminFoodForm from './components/AdminFoodForm';
 import ProtectedRoute from './components/ProtectedRoute';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/admin/food/:id/edit" element={<ProtectedRoute adminOnly><AdminFoodForm /></ProtectedRoute>} />
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -3,14 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import API from '../api/axios';
 
 const categories = [
-  { key: 'mon-nhau', label: 'Mon nhau' },
-  { key: 'tra-sua', label: 'Tra sua' },
-  { key: 'chien', label: 'Chien' },
-  { key: 'pho-bun', label: 'Pho & Bun' },
-  { key: 'com', label: 'Com' },
-  { key: 'mon-an-vat', label: 'Mon an vat' },
-  { key: 'nuoc', label: 'Nuoc' },
-  { key: 'lau', label: 'Lau' }
+  { key: 'mon-nhau', label: 'Món nhậu' },
+  { key: 'tra-sua', label: 'Trà sữa' },
+  { key: 'chien', label: 'Chiên' },
+  { key: 'pho-bun', label: 'Phở & Bún' },
+  { key: 'com', label: 'Cơm' },
+  { key: 'mon-an-vat', label: 'Món ăn vặt' },
+  { key: 'nuoc', label: 'Nước' },
+  { key: 'lau', label: 'Lẩu' }
 ];
 
 const AdminFoodForm = () => {
@@ -43,7 +43,7 @@ const AdminFoodForm = () => {
             available: food.available !== false
           });
         } catch (err) {
-          setError('Khong tim thay mon an');
+          setError('Không tìm thấy món ăn');
         }
       };
       fetchFood();
@@ -78,7 +78,7 @@ const AdminFoodForm = () => {
       }
       navigate('/admin');
     } catch (err) {
-      setError(err.response?.data?.msg || 'Co loi xay ra');
+      setError(err.response?.data?.msg || 'Có lỗi xảy ra');
     }
     setLoading(false);
   };
@@ -86,30 +86,30 @@ const AdminFoodForm = () => {
   return (
     <div className="admin-form-page">
       <div className="container">
-        <button className="back-btn" onClick={() => navigate('/admin')}>← Quay lai</button>
-        <h1>{isEdit ? '✏️ Sua mon an' : '➕ Them mon moi'}</h1>
+        <button className="back-btn" onClick={() => navigate('/admin')}>← Quay lại</button>
+        <h1>{isEdit ? '✏️ Sửa món ăn' : '➕ Thêm món mới'}</h1>
 
         {error && <div className="error-msg">{error}</div>}
 
         <form className="admin-food-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Ten mon an *</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Ten mon an" required />
+            <label>Tên món ăn *</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Tên món ăn" required />
           </div>
 
           <div className="form-group">
-            <label>Mo ta</label>
-            <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Mo ta mon an" rows={3} />
+            <label>Mô tả</label>
+            <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Mô tả món ăn" rows={3} />
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Gia (VND) *</label>
+              <label>Giá (VND) *</label>
               <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="0" min="0" required />
             </div>
 
             <div className="form-group">
-              <label>Danh muc *</label>
+              <label>Danh mục *</label>
               <select name="category" value={formData.category} onChange={handleChange}>
                 {categories.map(cat => (
                   <option key={cat.key} value={cat.key}>{cat.label}</option>
@@ -119,25 +119,25 @@ const AdminFoodForm = () => {
           </div>
 
           <div className="form-group">
-            <label>URL hinh anh</label>
+            <label>URL hình ảnh</label>
             <input type="text" name="image" value={formData.image} onChange={handleChange} placeholder="https://example.com/image.jpg" />
           </div>
 
           <div className="form-group checkbox-group">
             <label>
               <input type="checkbox" name="isPromotion" checked={formData.isPromotion} onChange={handleChange} />
-              Dang khuyen mai
+              Đang khuyến mãi
             </label>
           </div>
 
           {formData.isPromotion && (
             <div className="form-row">
               <div className="form-group">
-                <label>Gia khuyen mai (VND)</label>
+                <label>Giá khuyến mãi (VND)</label>
                 <input type="number" name="promotionPrice" value={formData.promotionPrice} onChange={handleChange} placeholder="0" min="0" />
               </div>
               <div className="form-group">
-                <label>Ket thuc khuyen mai</label>
+                <label>Kết thúc khuyến mãi</label>
                 <input type="datetime-local" name="promotionEnd" value={formData.promotionEnd} onChange={handleChange} />
               </div>
             </div>
@@ -146,12 +146,12 @@ const AdminFoodForm = () => {
           <div className="form-group checkbox-group">
             <label>
               <input type="checkbox" name="available" checked={formData.available} onChange={handleChange} />
-              Con hang
+              Còn hàng
             </label>
           </div>
 
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Dang xu ly...' : (isEdit ? 'Cap nhat' : 'Them mon')}
+            {loading ? 'Đang xử lý...' : (isEdit ? 'Cập nhật' : 'Thêm món')}
           </button>
         </form>
       </div>

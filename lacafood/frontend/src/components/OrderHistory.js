@@ -6,12 +6,12 @@ const formatPrice = (price) => {
 };
 
 const statusMap = {
-  'pending': { label: 'Cho xac nhan', color: '#f39c12' },
-  'confirmed': { label: 'Da xac nhan', color: '#3498db' },
-  'preparing': { label: 'Dang chuan bi', color: '#9b59b6' },
-  'delivering': { label: 'Dang giao', color: '#1abc9c' },
-  'completed': { label: 'Hoan thanh', color: '#27ae60' },
-  'cancelled': { label: 'Da huy', color: '#e74c3c' }
+  'pending': { label: 'Chờ xác nhận', color: '#f39c12' },
+  'confirmed': { label: 'Đã xác nhận', color: '#3498db' },
+  'preparing': { label: 'Đang chuẩn bị', color: '#9b59b6' },
+  'delivering': { label: 'Đang giao', color: '#1abc9c' },
+  'completed': { label: 'Hoàn thành', color: '#27ae60' },
+  'cancelled': { label: 'Đã hủy', color: '#e74c3c' }
 };
 
 const OrderHistory = () => {
@@ -31,15 +31,15 @@ const OrderHistory = () => {
     fetchOrders();
   }, []);
 
-  if (loading) return <div className="loading">Dang tai...</div>;
+  if (loading) return <div className="loading">Đang tải...</div>;
 
   return (
     <div className="orders-page">
       <div className="container">
-        <h1>📦 Don hang cua toi</h1>
+        <h1>📦 Đơn hàng của tôi</h1>
 
         {orders.length === 0 ? (
-          <div className="empty-state">Ban chua co don hang nao</div>
+          <div className="empty-state">Bạn chưa có đơn hàng nào</div>
         ) : (
           <div className="orders-list">
             {orders.map(order => (
@@ -67,8 +67,8 @@ const OrderHistory = () => {
                   ))}
                 </div>
                 <div className="order-footer">
-                  <span>Thanh toan: {order.paymentMethod === 'cod' ? '💵 COD' : '📱 QR Code'}</span>
-                  <span className="order-total">Tong: {formatPrice(order.total)}</span>
+                  <span>Thanh toán: {order.paymentMethod === 'cod' ? '💵 COD' : '📱 QR Code'}</span>
+                  <span className="order-total">Tổng: {formatPrice(order.total)}</span>
                 </div>
               </div>
             ))}
