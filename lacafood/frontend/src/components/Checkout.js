@@ -201,6 +201,31 @@ const Checkout = () => {
                   </div>
                 </label>
               </div>
+
+              {paymentMethod === 'qr' && (
+                <div className="qr-preview">
+                  <h3>📱 Mã QR thanh toán sẽ hiển thị sau khi đặt hàng</h3>
+                  <div className="bank-info">
+                    <div className="bank-info-row">
+                      <span>Ngân hàng:</span>
+                      <span>Vietcombank</span>
+                    </div>
+                    <div className="bank-info-row">
+                      <span>Chủ tài khoản:</span>
+                      <span>LACAFOOD CO LTD</span>
+                    </div>
+                    <div className="bank-info-row">
+                      <span>Số tài khoản:</span>
+                      <span>1234 5678 9012</span>
+                    </div>
+                    <div className="bank-info-row">
+                      <span>Số tiền:</span>
+                      <span>{formatPrice(getTotal())}</span>
+                    </div>
+                  </div>
+                  <p>Mã QR sẽ được tạo tự động sau khi bạn xác nhận đặt hàng</p>
+                </div>
+              )}
             </div>
 
             <button type="submit" className="place-order-btn" disabled={loading}>
