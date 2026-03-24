@@ -79,8 +79,22 @@ const Home = () => {
         <div className="hero-overlay">
           <div className="hero-content">
             <h1>🍊 LacaFood</h1>
-            <p>Đặt món ngon - Giao nhanh tận nơi</p>
-            <Link to="/menu" className="hero-btn">Xem thực đơn</Link>
+            <p>Đặt món ngon — Giao nhanh tận nơi</p>
+            <Link to="/menu" className="hero-btn">🍽️ Xem thực đơn</Link>
+            <div className="hero-features">
+              <div className="hero-feature">
+                <span className="hero-feature-icon">🚀</span>
+                <span>Giao hàng nhanh</span>
+              </div>
+              <div className="hero-feature">
+                <span className="hero-feature-icon">💰</span>
+                <span>Giá tốt nhất</span>
+              </div>
+              <div className="hero-feature">
+                <span className="hero-feature-icon">⭐</span>
+                <span>Chất lượng cao</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -90,24 +104,27 @@ const Home = () => {
         <section className="promo-section">
           <div className="container">
             <div className="promo-header">
-              <h2>🔥 KHUYẾN MÃI ĐẶC BIỆT</h2>
+              <div className="promo-title-group">
+                <div className="promo-fire-icon">🔥</div>
+                <h2>KHUYẾN MÃI <span>ĐẶC BIỆT</span></h2>
+              </div>
               <div className="countdown">
                 <span className="countdown-label">Kết thúc sau:</span>
                 <div className="countdown-timer">
                   <div className="time-box">
-                    <span className="time-number">{timeLeft.days || 0}</span>
+                    <span className="time-number">{String(timeLeft.days || 0).padStart(2, '0')}</span>
                     <span className="time-label">Ngày</span>
                   </div>
                   <div className="time-box">
-                    <span className="time-number">{timeLeft.hours || 0}</span>
+                    <span className="time-number">{String(timeLeft.hours || 0).padStart(2, '0')}</span>
                     <span className="time-label">Giờ</span>
                   </div>
                   <div className="time-box">
-                    <span className="time-number">{timeLeft.minutes || 0}</span>
+                    <span className="time-number">{String(timeLeft.minutes || 0).padStart(2, '0')}</span>
                     <span className="time-label">Phút</span>
                   </div>
                   <div className="time-box">
-                    <span className="time-number">{timeLeft.seconds || 0}</span>
+                    <span className="time-number">{String(timeLeft.seconds || 0).padStart(2, '0')}</span>
                     <span className="time-label">Giây</span>
                   </div>
                 </div>
@@ -130,7 +147,7 @@ const Home = () => {
                       <span className="price-old">{formatPrice(food.price)}</span>
                       <span className="price-new">{formatPrice(food.promotionPrice)}</span>
                     </div>
-                    <button className="add-cart-btn" onClick={() => addToCart(food)}>+ Them vao gio</button>
+                    <button className="add-cart-btn" onClick={() => addToCart(food)}>+ Thêm vào giỏ</button>
                   </div>
                 </div>
               ))}
@@ -142,11 +159,11 @@ const Home = () => {
       {/* Categories Section */}
       <section className="categories-section">
         <div className="container">
-          <h2>📋 Danh muc mon an</h2>
+          <h2>📋 Danh mục món ăn</h2>
           <div className="category-grid">
             {categoryList.map(cat => (
               <Link key={cat.key} to={`/menu/${cat.key}`} className="category-card">
-                <span className="category-icon">{cat.icon}</span>
+                <span className="category-icon">{categoryIcons[cat.key]}</span>
                 <span className="category-name">{cat.label}</span>
               </Link>
             ))}
