@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import 'leaflet/dist/leaflet.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Menu from './components/Menu';
