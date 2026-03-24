@@ -64,6 +64,7 @@ const Navbar = () => {
                   >
                     {cat.icon} {cat.label}
                   </Link>
+                ))}
               </div>
             )}
           </div>
