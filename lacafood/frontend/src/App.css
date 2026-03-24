@@ -2594,3 +2594,147 @@ button {
     gap: 12px;
   }
 }
+
+/* ===== DELIVERY MAP STYLES ===== */
+.delivery-map-container {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border: 2px solid #f0f0f0;
+}
+
+.delivery-map-container .leaflet-container {
+  z-index: 1;
+}
+
+.map-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #ff5722 0%, #ff7043 100%);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.map-route-line {
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: -2px;
+}
+
+.map-distance {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+/* Checkout map preview */
+.checkout-map-preview {
+  margin-top: 16px;
+}
+
+.checkout-map-preview h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Distance info box in checkout */
+.distance-info-box {
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+  border: 1px solid #c8e6c9;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 8px;
+}
+
+.distance-result,
+.shipping-fee-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.distance-result {
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.distance-value {
+  color: #ff5722;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.free-shipping {
+  color: #27ae60;
+  font-weight: 700;
+}
+
+/* Geocoding hints */
+.geocoding-hint {
+  color: #3498db;
+  font-size: 0.82rem;
+  display: block;
+  margin-top: 4px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.geocode-error {
+  color: #e74c3c;
+  font-size: 0.82rem;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Order history - delivery map */
+.order-delivery-map {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed #e0e0e0;
+}
+
+.order-delivery-map h4 {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  color: #1abc9c;
+}
+
+.order-delivery-map .shipper-info {
+  font-size: 0.88rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Shipper dashboard - route map */
+.shipper-route-map {
+  margin: 12px 0;
+}
+
+/* Map responsive */
+@media (max-width: 768px) {
+  .map-info-bar {
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    gap: 5px;
+  }
+
+  .distance-info-box {
+    padding: 10px 14px;
+  }
+
+  .distance-result,
+  .shipping-fee-result {
+    font-size: 0.85rem;
+  }
+}
