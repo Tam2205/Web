@@ -76,6 +76,20 @@ const OrderHistory = () => {
                     <span className="order-total">Tổng: {formatPrice(order.total)}</span>
                   </div>
                 </div>
+
+                {/* Delivery map for orders being delivered */}
+                {order.status === 'delivering' && order.deliveryLat && order.deliveryLng && (
+                  <div className="order-delivery-map">
+                    <h4>🚚 Shipper đang trên đường giao hàng</h4>
+                    {order.shipper && <p className="shipper-info">👤 Shipper: {order.shipper.name}</p>}
+                    <DeliveryMap
+                      customerLat={order.deliveryLat}
+                      customerLng={order.deliveryLng}
+                      customerAddress={order.address}
+                      height="250px"
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>
