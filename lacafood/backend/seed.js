@@ -38,6 +38,16 @@ const seedDB = async () => {
       role: 'user'
     });
 
+    // Create shipper
+    const shipperPass = await bcrypt.hash('shipper123', salt);
+    await User.create({
+      name: 'Shipper Minh',
+      email: 'shipper@lacafood.com',
+      password: shipperPass,
+      phone: '0369123456',
+      role: 'shipper'
+    });
+
     // Promotion end (3 days from now)
     const promoEnd = new Date();
     promoEnd.setDate(promoEnd.getDate() + 3);
