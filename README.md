@@ -60,9 +60,4 @@ npm start
 - Khi nhập địa chỉ giao hàng, hệ thống sẽ tự động tìm tọa độ và tính phí ship, hiển thị bản đồ lộ trình
 - Demo QR code chuyển khoản: VpBank, Vũ Xuân Tâm, 0397203124
 
-## Ảnh minh họa
-![LacaFood UI](https://i.imgur.com/2Qw1QwB.png)
-
----
-
 © 2026 LacaFood. Dự án mẫu học tập, không dùng cho mục đích thương mại.
