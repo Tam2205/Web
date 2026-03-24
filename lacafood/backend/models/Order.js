@@ -20,7 +20,9 @@ const orderSchema = new mongoose.Schema({
   },
   shipper: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   address: { type: String, required: true },
-  phone: { type: String, required: true }
+  phone: { type: String, required: true },
+  deliveryLat: { type: Number, default: null },
+  deliveryLng: { type: Number, default: null }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);
