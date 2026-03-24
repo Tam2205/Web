@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Menu from './components/Menu';
@@ -14,9 +14,18 @@ import AdminFoodForm from './components/AdminFoodForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import Footer from './components/Footer';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function App() {
   return (
     <div className="App">
+      <ScrollToTop />
       <Navbar />
       <main className="main-content">
         <Routes>
