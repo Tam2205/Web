@@ -10,6 +10,8 @@ const orderSchema = new mongoose.Schema({
     note: { type: String, default: '' }
   }],
   total: { type: Number, required: true },
+  distance: { type: Number, default: 0 },
+  shippingFee: { type: Number, default: 0 },
   paymentMethod: { type: String, enum: ['cod', 'qr'], required: true },
   status: {
     type: String,

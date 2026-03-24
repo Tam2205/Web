@@ -208,15 +208,15 @@ const Checkout = () => {
                   <div className="bank-info">
                     <div className="bank-info-row">
                       <span>Ngân hàng:</span>
-                      <span>Vietcombank</span>
+                      <span>VpBank</span>
                     </div>
                     <div className="bank-info-row">
                       <span>Chủ tài khoản:</span>
-                      <span>LACAFOOD CO LTD</span>
+                      <span>Vũ Xuân Tâm</span>
                     </div>
                     <div className="bank-info-row">
                       <span>Số tài khoản:</span>
-                      <span>1234 5678 9012</span>
+                      <span>0397203124</span>
                     </div>
                     <div className="bank-info-row">
                       <span>Số tiền:</span>

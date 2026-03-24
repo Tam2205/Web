@@ -6,7 +6,7 @@ const { auth, admin } = require('../middleware/auth');
 // Create order
 router.post('/', auth, async (req, res) => {
   try {
-    const { items, total, paymentMethod, address, phone } = req.body;
+    const { items, total, paymentMethod, address, phone, distance, shippingFee } = req.body;
 
     if (!items || items.length === 0) {
       return res.status(400).json({ msg: 'Giỏ hàng trống' });
@@ -21,7 +21,9 @@ router.post('/', auth, async (req, res) => {
       total,
       paymentMethod,
       address,
-      phone
+      phone,
+      distance: distance || 0,
+      shippingFee: shippingFee || 0
     });
 
     await order.save();
