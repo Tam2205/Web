@@ -43,30 +43,28 @@ const Navbar = () => {
           <Link to="/" className="nav-link" onClick={() => setMobileOpen(false)}>Trang chủ</Link>
 
           <div
-            className="nav-dropdown"
+            className={`nav-dropdown ${menuOpen ? 'open' : ''}`}
             onMouseEnter={() => setMenuOpen(true)}
             onMouseLeave={() => setMenuOpen(false)}
           >
             <Link to="/menu" className="nav-link" onClick={() => setMobileOpen(false)}>
               Thực đơn ▾
             </Link>
-            {menuOpen && (
-              <div className="dropdown-menu">
-                <Link to="/menu" className="dropdown-item" onClick={() => { setMenuOpen(false); setMobileOpen(false); }}>
-                  📋 Tất cả món
+            <div className="dropdown-menu">
+              <Link to="/menu" className="dropdown-item" onClick={() => { setMenuOpen(false); setMobileOpen(false); }}>
+                📋 Tất cả món
+              </Link>
+              {categories.map(cat => (
+                <Link
+                  key={cat.key}
+                  to={`/menu/${cat.key}`}
+                  className="dropdown-item"
+                  onClick={() => { setMenuOpen(false); setMobileOpen(false); }}
+                >
+                  {cat.icon} {cat.label}
                 </Link>
-                {categories.map(cat => (
-                  <Link
-                    key={cat.key}
-                    to={`/menu/${cat.key}`}
-                    className="dropdown-item"
-                    onClick={() => { setMenuOpen(false); setMobileOpen(false); }}
-                  >
-                    {cat.icon} {cat.label}
-                  </Link>
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
           </div>
 
           <Link to="/cart" className="nav-link cart-link" onClick={() => setMobileOpen(false)}>
@@ -76,33 +74,31 @@ const Navbar = () => {
 
           {user ? (
             <div
-              className="nav-dropdown"
+              className={`nav-dropdown ${userMenuOpen ? 'open' : ''}`}
               onMouseEnter={() => setUserMenuOpen(true)}
               onMouseLeave={() => setUserMenuOpen(false)}
             >
               <span className="nav-link user-link">
                 👤 {user.name} ▾
               </span>
-              {userMenuOpen && (
-                <div className="dropdown-menu">
-                  <Link to="/orders" className="dropdown-item" onClick={() => { setUserMenuOpen(false); setMobileOpen(false); }}>
-                    📦 Đơn hàng
+              <div className="dropdown-menu">
+                <Link to="/orders" className="dropdown-item" onClick={() => { setUserMenuOpen(false); setMobileOpen(false); }}>
+                  📦 Đơn hàng
+                </Link>
+                {user.role === 'admin' && (
+                  <Link to="/admin" className="dropdown-item" onClick={() => { setUserMenuOpen(false); setMobileOpen(false); }}>
+                    ⚙️ Quản trị
                   </Link>
-                  {user.role === 'admin' && (
-                    <Link to="/admin" className="dropdown-item" onClick={() => { setUserMenuOpen(false); setMobileOpen(false); }}>
-                      ⚙️ Quản trị
-                    </Link>
-                  )}
-                  {user.role === 'shipper' && (
-                    <Link to="/shipper" className="dropdown-item" onClick={() => { setUserMenuOpen(false); setMobileOpen(false); }}>
-                      🚚 Đơn giao hàng
-                    </Link>
-                  )}
-                  <button className="dropdown-item logout-btn" onClick={handleLogout}>
-                    🚪 Đăng xuất
-                  </button>
-                </div>
-              )}
+                )}
+                {user.role === 'shipper' && (
+                  <Link to="/shipper" className="dropdown-item" onClick={() => { setUserMenuOpen(false); setMobileOpen(false); }}>
+                    🚚 Đơn giao hàng
+                  </Link>
+                )}
+                <button className="dropdown-item logout-btn" onClick={handleLogout}>
+                  🚪 Đăng xuất
+                </button>
+              </div>
             </div>
           ) : (
             <Link to="/login" className="nav-link login-link" onClick={() => setMobileOpen(false)}>
