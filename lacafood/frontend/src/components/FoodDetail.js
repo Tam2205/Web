@@ -4,9 +4,9 @@ import API from '../api/axios';
 import { useCart } from '../context/CartContext';
 
 const categoryNames = {
-  'mon-nhau': 'Mon nhau', 'tra-sua': 'Tra sua', 'chien': 'Chien',
-  'pho-bun': 'Pho & Bun', 'com': 'Com', 'mon-an-vat': 'Mon an vat',
-  'nuoc': 'Nuoc', 'lau': 'Lau'
+  'mon-nhau': 'Món nhậu', 'tra-sua': 'Trà sữa', 'chien': 'Chiên',
+  'pho-bun': 'Phở & Bún', 'com': 'Cơm', 'mon-an-vat': 'Món ăn vặt',
+  'nuoc': 'Nước', 'lau': 'Lẩu'
 };
 
 const categoryIcons = {
@@ -51,15 +51,15 @@ const FoodDetail = () => {
     setTimeout(() => setAdded(false), 2000);
   };
 
-  if (loading) return <div className="loading">Dang tai...</div>;
-  if (!food) return <div className="empty-state">Khong tim thay mon an</div>;
+  if (loading) return <div className="loading">Đang tải...</div>;
+  if (!food) return <div className="empty-state">Không tìm thấy món ăn</div>;
 
   const currentPrice = isPromoActive() ? food.promotionPrice : food.price;
 
   return (
     <div className="food-detail-page">
       <div className="container">
-        <button className="back-btn" onClick={() => navigate(-1)}>← Quay lai</button>
+        <button className="back-btn" onClick={() => navigate(-1)}>← Quay lại</button>
 
         <div className="food-detail">
           <div className="food-detail-image">
@@ -70,7 +70,7 @@ const FoodDetail = () => {
             )}
             {isPromoActive() && (
               <div className="promo-badge-large">
-                GIAM {Math.round((1 - food.promotionPrice / food.price) * 100)}%
+                GIẢM {Math.round((1 - food.promotionPrice / food.price) * 100)}%
               </div>
             )}
           </div>
@@ -92,7 +92,7 @@ const FoodDetail = () => {
             </div>
 
             <div className="quantity-selector">
-              <label>So luong:</label>
+              <label>Số lượng:</label>
               <div className="qty-controls">
                 <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
                 <span>{quantity}</span>
@@ -101,17 +101,17 @@ const FoodDetail = () => {
             </div>
 
             <div className="note-section">
-              <label>📝 Ghi chu / Yeu cau dac biet:</label>
+              <label>📝 Ghi chú / Yêu cầu đặc biệt:</label>
               <textarea
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                placeholder="Vi du: It cay, them rau, khong hanh..."
+                placeholder="Ví dụ: Ít cay, thêm rau, không hành..."
                 rows={3}
               />
             </div>
 
             <div className="food-detail-total">
-              <span>Tong: </span>
+              <span>Tổng: </span>
               <span className="total-price">{formatPrice(currentPrice * quantity)}</span>
             </div>
 
@@ -119,7 +119,7 @@ const FoodDetail = () => {
               className={`add-cart-btn-large ${added ? 'added' : ''}`}
               onClick={handleAddToCart}
             >
-              {added ? '✓ Da them vao gio!' : '🛒 Them vao gio hang'}
+              {added ? '✓ Đã thêm vào giỏ!' : '🛒 Thêm vào giỏ hàng'}
             </button>
           </div>
         </div>

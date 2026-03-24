@@ -4,15 +4,15 @@ import API from '../api/axios';
 import { useCart } from '../context/CartContext';
 
 const categories = [
-  { key: '', label: 'Tat ca', icon: '📋' },
-  { key: 'mon-nhau', label: 'Mon nhau', icon: '🍗' },
-  { key: 'tra-sua', label: 'Tra sua', icon: '🧋' },
-  { key: 'chien', label: 'Chien', icon: '🍟' },
-  { key: 'pho-bun', label: 'Pho & Bun', icon: '🍜' },
-  { key: 'com', label: 'Com', icon: '🍚' },
-  { key: 'mon-an-vat', label: 'Mon an vat', icon: '🍢' },
-  { key: 'nuoc', label: 'Nuoc', icon: '🥤' },
-  { key: 'lau', label: 'Lau', icon: '🍲' }
+  { key: '', label: 'Tất cả', icon: '📋' },
+  { key: 'mon-nhau', label: 'Món nhậu', icon: '🍗' },
+  { key: 'tra-sua', label: 'Trà sữa', icon: '🧋' },
+  { key: 'chien', label: 'Chiên', icon: '🍟' },
+  { key: 'pho-bun', label: 'Phở & Bún', icon: '🍜' },
+  { key: 'com', label: 'Cơm', icon: '🍚' },
+  { key: 'mon-an-vat', label: 'Món ăn vặt', icon: '🍢' },
+  { key: 'nuoc', label: 'Nước', icon: '🥤' },
+  { key: 'lau', label: 'Lẩu', icon: '🍲' }
 ];
 
 const categoryIcons = {
@@ -62,13 +62,13 @@ const Menu = () => {
   return (
     <div className="menu-page">
       <div className="container">
-        <h1>🍽️ Thuc don</h1>
+        <h1>🍽️ Thực đơn</h1>
 
         <div className="menu-controls">
           <div className="search-bar">
             <input
               type="text"
-              placeholder="🔍 Tim kiem mon an..."
+              placeholder="🔍 Tìm kiếm món ăn..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -88,9 +88,9 @@ const Menu = () => {
         </div>
 
         {loading ? (
-          <div className="loading">Dang tai...</div>
+          <div className="loading">Đang tải...</div>
         ) : foods.length === 0 ? (
-          <div className="empty-state">Khong tim thay mon an nao</div>
+          <div className="empty-state">Không tìm thấy món ăn nào</div>
         ) : (
           <div className="food-grid">
             {foods.map(food => (
@@ -118,7 +118,7 @@ const Menu = () => {
                       <span className="price-current">{formatPrice(food.price)}</span>
                     )}
                   </div>
-                  <button className="add-cart-btn" onClick={() => addToCart(food)}>+ Them vao gio</button>
+                  <button className="add-cart-btn" onClick={() => addToCart(food)}>+ Thêm vào giỏ</button>
                 </div>
               </div>
             ))}
