@@ -104,6 +104,18 @@ const ShipperDashboard = () => {
                   {order.distance > 0 && <p>📏 Khoảng cách: {order.distance}km</p>}
                 </div>
 
+                {/* Route map for delivering orders */}
+                {order.deliveryLat && order.deliveryLng && order.status === 'delivering' && (
+                  <div className="shipper-route-map">
+                    <DeliveryMap
+                      customerLat={order.deliveryLat}
+                      customerLng={order.deliveryLng}
+                      customerAddress={order.address}
+                      height="220px"
+                    />
+                  </div>
+                )}
+
                 <div className="order-items">
                   {order.items.map((item, idx) => (
                     <div key={idx} className="order-item">
