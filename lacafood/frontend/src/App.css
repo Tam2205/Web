@@ -1263,6 +1263,34 @@ button {
   color: var(--primary);
 }
 
+.summary-row.shipping-detail {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  padding: 2px 0 8px;
+}
+
+.shipping-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.shipping-fee-tag {
+  display: inline-block;
+  font-size: 0.82rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-right: 12px;
+}
+
+.order-total-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .checkout-btn {
   width: 100%;
   padding: 15px;

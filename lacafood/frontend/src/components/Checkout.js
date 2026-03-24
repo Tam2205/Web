@@ -16,10 +16,21 @@ const Checkout = () => {
 
   const [address, setAddress] = useState(user?.address || '');
   const [phone, setPhone] = useState(user?.phone || '');
+  const [distance, setDistance] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [orderSuccess, setOrderSuccess] = useState(null);
+
+  const getShippingFee = () => {
+    const km = parseFloat(distance) || 0;
+    if (km <= 5) return 0;
+    return Math.ceil(km - 5) * 10000;
+  };
+
+  const getFinalTotal = () => {
+    return getTotal() + getShippingFee();
+  };
 
   const getItemPrice = (item) => {
     const food = item.food;
@@ -37,6 +48,11 @@ const Checkout = () => {
       return;
     }
 
+    if (!distance || parseFloat(distance) <= 0) {
+      setError('Vui lòng nhập khoảng cách giao hàng');
+      return;
+    }
+
     setLoading(true);
     try {
       const orderItems = cartItems.map(item => ({
@@ -49,10 +65,12 @@ const Checkout = () => {
 
       const res = await API.post('/orders', {
         items: orderItems,
-        total: getTotal(),
+        total: getFinalTotal(),
         paymentMethod,
         address: address.trim(),
-        phone: phone.trim()
+        phone: phone.trim(),
+        distance: parseFloat(distance) || 0,
+        shippingFee: getShippingFee()
       });
 
       setOrderSuccess(res.data);
@@ -162,6 +180,24 @@ const Checkout = () => {
                   required
                 />
               </div>
+              <div className="form-group">
+                <label>Khoảng cách giao hàng (km) *</label>
+                <input
+                  type="number"
+                  min="0.1"
+                  step="0.1"
+                  value={distance}
+                  onChange={(e) => setDistance(e.target.value)}
+                  placeholder="Nhập khoảng cách (km)"
+                  required
+                />
+                <small className="shipping-hint">
+                  {!distance || parseFloat(distance) <= 5
+                    ? '🚚 Dưới 5km: Miễn phí giao hàng'
+                    : `🚚 Phí giao hàng: ${formatPrice(getShippingFee())} (${Math.ceil(parseFloat(distance) - 5)}km x 10.000đ)`
+                  }
+                </small>
+              </div>
             </div>
 
             <div className="form-section">
@@ -220,7 +256,7 @@ const Checkout = () => {
                     </div>
                     <div className="bank-info-row">
                       <span>Số tiền:</span>
-                      <span>{formatPrice(getTotal())}</span>
+                      <span>{formatPrice(getFinalTotal())}</span>
                     </div>
                   </div>
                   <p>Mã QR sẽ được tạo tự động sau khi bạn xác nhận đặt hàng</p>
@@ -229,7 +265,7 @@ const Checkout = () => {
             </div>
 
             <button type="submit" className="place-order-btn" disabled={loading}>
-              {loading ? 'Đang xử lý...' : `Đặt hàng - ${formatPrice(getTotal())}`}
+              {loading ? 'Đang xử lý...' : `Đặt hàng - ${formatPrice(getFinalTotal())}`}
             </button>
           </form>
 
@@ -251,11 +287,17 @@ const Checkout = () => {
             </div>
             <div className="summary-row">
               <span>Phí giao hàng:</span>
-              <span>Miễn phí</span>
+              <span>{getShippingFee() > 0 ? formatPrice(getShippingFee()) : 'Miễn phí'}</span>
             </div>
+            {getShippingFee() > 0 && distance && (
+              <div className="summary-row shipping-detail">
+                <span>({parseFloat(distance)}km - miễn phí 5km đầu)</span>
+                <span>{Math.ceil(parseFloat(distance) - 5)}km x 10.000đ</span>
+              </div>
+            )}
             <div className="summary-row total">
               <span>Tổng cộng:</span>
-              <span>{formatPrice(getTotal())}</span>
+              <span>{formatPrice(getFinalTotal())}</span>
             </div>
           </div>
         </div>

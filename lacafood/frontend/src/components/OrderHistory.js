@@ -68,7 +68,12 @@ const OrderHistory = () => {
                 </div>
                 <div className="order-footer">
                   <span>Thanh toán: {order.paymentMethod === 'cod' ? '💵 COD' : '📱 QR Code'}</span>
-                  <span className="order-total">Tổng: {formatPrice(order.total)}</span>
+                  <div className="order-total-info">
+                    {order.shippingFee > 0 && (
+                      <span className="shipping-fee-tag">🚚 Phí ship: {formatPrice(order.shippingFee)} ({order.distance}km)</span>
+                    )}
+                    <span className="order-total">Tổng: {formatPrice(order.total)}</span>
+                  </div>
                 </div>
               </div>
             ))}

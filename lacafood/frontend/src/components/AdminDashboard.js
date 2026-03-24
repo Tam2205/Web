@@ -181,6 +181,9 @@ const AdminDashboard = () => {
                     </div>
                     <div className="order-footer">
                       <span>💳 {order.paymentMethod === 'cod' ? 'COD' : 'QR Code'}</span>
+                      {order.shippingFee > 0 && (
+                        <span className="shipping-fee-tag">🚚 Ship: {formatPrice(order.shippingFee)} ({order.distance}km)</span>
+                      )}
                       <span className="order-total">Tổng: {formatPrice(order.total)}</span>
                     </div>
                   </div>
