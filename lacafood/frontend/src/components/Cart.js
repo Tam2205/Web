@@ -89,10 +89,10 @@ const Cart = () => {
             </div>
             <div className="summary-row">
               <span>Phí giao hàng:</span>
-              <span>Miễn phí</span>
+              <span className="shipping-note">Tính khi thanh toán</span>
             </div>
             <div className="summary-row total">
-              <span>Tổng cộng:</span>
+              <span>Tạm tính:</span>
               <span>{formatPrice(getTotal())}</span>
             </div>
             <button className="checkout-btn" onClick={handleCheckout}>
