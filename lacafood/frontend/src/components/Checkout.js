@@ -33,7 +33,7 @@ const Checkout = () => {
     setError('');
 
     if (!address.trim() || !phone.trim()) {
-      setError('Vui long dien day du dia chi va so dien thoai');
+      setError('Vui lòng điền đầy đủ địa chỉ và số điện thoại');
       return;
     }
 
@@ -58,7 +58,7 @@ const Checkout = () => {
       setOrderSuccess(res.data);
       clearCart();
     } catch (err) {
-      setError(err.response?.data?.msg || 'Co loi xay ra khi dat hang');
+      setError(err.response?.data?.msg || 'Có lỗi xảy ra khi đặt hàng');
     }
     setLoading(false);
   };
