@@ -44,52 +44,52 @@ const seedDB = async () => {
 
     const foods = [
       // Mon nhau
-      { name: 'Ga chien mam', description: 'Ga chien gion rum tam mam ot cay nong, thom lung', price: 89000, category: 'mon-nhau', isPromotion: true, promotionPrice: 69000, promotionEnd: promoEnd },
-      { name: 'Canh ga chien nuoc mam', description: 'Canh ga chien vang uom, sot nuoc mam toi ot', price: 75000, category: 'mon-nhau' },
-      { name: 'Bo luc lac', description: 'Bo Uc luc lac mem ngot, kem rau song', price: 120000, category: 'mon-nhau', isPromotion: true, promotionPrice: 95000, promotionEnd: promoEnd },
-      { name: 'Muc chien gion', description: 'Muc tuoi chien gion, cham muoi tieu chanh', price: 95000, category: 'mon-nhau' },
+      { name: 'Gà chiên giòn', description: 'Gà chiên giòn rưm tẩm mắm ớt cay nồng, thơm lừng', image: "", price: 89000, category: 'mon-nhau', isPromotion: true, promotionPrice: 69000, promotionEnd: promoEnd },
+      { name: 'Canh gà chiên nước mắm', description: 'Canh gà chiên vàng ươm, sốt nước mắm tỏi ớt', image: "", price: 75000, category: 'mon-nhau' },
+      { name: 'Bò lúc lắc', description: 'Bò Úc lúc lắc mềm ngọt, kèm rau sống', image: "", price: 120000, category: 'mon-nhau', isPromotion: true, promotionPrice: 95000, promotionEnd: promoEnd },
+      { name: 'Mực chiên giòn', description: 'Mực tươi chiên giòn, chấm muối tiêu chanh', image: "", price: 95000, category: 'mon-nhau' },
 
-      // Tra sua
-      { name: 'Tra sua tran chau duong den', description: 'Tra sua thom beo, tran chau duong den Q deo', price: 35000, category: 'tra-sua', isPromotion: true, promotionPrice: 25000, promotionEnd: promoEnd },
-      { name: 'Tra sua matcha', description: 'Matcha Nhat Ban thuong hang, vi dam ngot thanh', price: 40000, category: 'tra-sua' },
-      { name: 'Tra dao cam sa', description: 'Tra dao thom mat, cam tuoi va sa thu gian', price: 30000, category: 'tra-sua' },
-      { name: 'Tra sua oolong', description: 'Tra oolong rang lua, vi dam da beo ngot', price: 38000, category: 'tra-sua' },
+      // Trà sữa
+      { name: 'Trà sữa trân châu đường đen', description: 'Trà sữa thơm béo, trân châu đường đen Q dẻo', image: "", price: 35000, category: 'tra-sua', isPromotion: true, promotionPrice: 25000, promotionEnd: promoEnd },
+      { name: 'Trà sữa matcha', description: 'Matcha Nhật Bản thượng hạng, vị đậm ngọt thanh', image: "", price: 40000, category: 'tra-sua' },
+      { name: 'Trà đào cam sả', description: 'Trà đào thơm mát, cam tươi và sả thư giãn', image: "", price: 30000, category: 'tra-sua' },
+      { name: 'Trà sữa oolong', description: 'Trà oolong rang lửa, vị đậm đà béo ngọt', image: "", price: 38000, category: 'tra-sua' },
 
-      // Chien
-      { name: 'Khoai tay chien', description: 'Khoai tay chien gion, kem tuong ca va pho mai', price: 25000, category: 'chien' },
-      { name: 'Banh goi', description: 'Banh goi nhan thit, gion tan thom lung', price: 20000, category: 'chien' },
-      { name: 'Nem ran', description: 'Nem ran truyen thong, nhan thit va rau', price: 30000, category: 'chien', isPromotion: true, promotionPrice: 22000, promotionEnd: promoEnd },
-      { name: 'Ca vien chien', description: 'Ca vien chien gion, cham tuong ot', price: 25000, category: 'chien' },
+      // Chiên
+      { name: 'Khoai tây chiên', description: 'Khoai tây chiên giòn, kèm tương cà và phô mai', price: 25000, category: 'chien' },
+      { name: 'Bánh gối', description: 'Bánh gối nhân thịt, giòn tan thơm lừng', price: 20000, category: 'chien' },
+      { name: 'Nem rán', description: 'Nem rán truyền thống, nhân thịt và rau', price: 30000, category: 'chien', isPromotion: true, promotionPrice: 22000, promotionEnd: promoEnd },
+      { name: 'Cá viên chiên', description: 'Cá viên chiên giòn, chấm tương ớt', price: 25000, category: 'chien' },
 
       // Pho bun
-      { name: 'Pho bo tai', description: 'Pho bo tai nam gau, nuoc dung ham xuong 12 tieng', price: 45000, category: 'pho-bun' },
-      { name: 'Bun bo Hue', description: 'Bun bo Hue cay nong, day du topping', price: 50000, category: 'pho-bun', isPromotion: true, promotionPrice: 39000, promotionEnd: promoEnd },
-      { name: 'Bun rieu cua', description: 'Bun rieu cua dong nau ca chua, dau hu chien', price: 40000, category: 'pho-bun' },
-      { name: 'Pho ga', description: 'Pho ga ta tha vuon, nuoc trong vi ngot thanh', price: 42000, category: 'pho-bun' },
+      { name: 'Phở bò tái', description: 'Phở bò tái nạm gầu, nước dùng hầm xương 12 tiếng', price: 45000, category: 'pho-bun' },
+      { name: 'Bún bò Huế', description: 'Bún bò Huế cay nồng, đầy đủ topping', price: 50000, category: 'pho-bun', isPromotion: true, promotionPrice: 39000, promotionEnd: promoEnd },
+      { name: 'Bún riêu cua', description: 'Bún riêu cua đồng nấu cà chua, đậu hũ chiên', price: 40000, category: 'pho-bun' },
+      { name: 'Phở gà', description: 'Phở gà ta thả vườn, nước trong vị ngọt thanh', price: 42000, category: 'pho-bun' },
 
       // Com
-      { name: 'Com tam suon bi', description: 'Com tam suon nuong than, bi, cha trung', price: 40000, category: 'com' },
-      { name: 'Com ga xoi mo', description: 'Ga chien gion xoi mo, da gion thit mem', price: 45000, category: 'com' },
-      { name: 'Com chien duong chau', description: 'Com chien trung, tom, lap xuong, dau Ha Lan', price: 38000, category: 'com', isPromotion: true, promotionPrice: 29000, promotionEnd: promoEnd },
-      { name: 'Com rang bo luc lac', description: 'Com rang voi bo Uc luc lac mem ngot', price: 55000, category: 'com' },
+      { name: 'Cơm tấm sườn bì', description: 'Cơm tấm sườn nướng than, bì, chả trứng', price: 40000, category: 'com' },
+      { name: 'Cơm gà xối mỡ', description: 'Gà chiên giòn xối mỡ, da giòn thịt mềm', price: 45000, category: 'com' },
+      { name: 'Cơm chiên dương châu', description: 'Cơm chiên trứng, tôm, lạp xưởng, đậu Hà Lan', price: 38000, category: 'com', isPromotion: true, promotionPrice: 29000, promotionEnd: promoEnd },
+      { name: 'Cơm rang bò lúc lắc', description: 'Cơm rang với bò Úc lúc lắc mềm ngọt', price: 55000, category: 'com' },
 
-      // Mon an vat
-      { name: 'Banh trang tron', description: 'Banh trang tron sate, kho bo, trung cut', price: 20000, category: 'mon-an-vat' },
-      { name: 'Xien que', description: 'Xien que du loai nuong sot cay', price: 15000, category: 'mon-an-vat' },
-      { name: 'Tokbokki', description: 'Banh gao Han Quoc sot cay ngot', price: 35000, category: 'mon-an-vat', isPromotion: true, promotionPrice: 25000, promotionEnd: promoEnd },
-      { name: 'Takoyaki', description: 'Banh bach tuoc kieu Nhat, 6 vien', price: 30000, category: 'mon-an-vat' },
+      // Món ăn vặt
+      { name: 'Bánh tráng trộn', description: 'Bánh tráng trộn sate, khô bò, trứng cút', price: 20000, category: 'mon-an-vat' },
+      { name: 'Xiên que', description: 'Xiên que đủ loại nướng sốt cay', price: 15000, category: 'mon-an-vat' },
+      { name: 'Tokbokki', description: 'Bánh gạo Hàn Quốc sốt cay ngọt', price: 35000, category: 'mon-an-vat', isPromotion: true, promotionPrice: 25000, promotionEnd: promoEnd },
+      { name: 'Takoyaki', description: 'Bánh bạch tuộc kiểu Nhật, 6 viên', price: 30000, category: 'mon-an-vat' },
 
       // Nuoc
-      { name: 'Nuoc cam ep', description: 'Cam tuoi ep nguyen chat, giau vitamin C', price: 25000, category: 'nuoc' },
-      { name: 'Sinh to bo', description: 'Bo sap deo beo, them sua dac', price: 30000, category: 'nuoc' },
-      { name: 'Coca Cola', description: 'Coca Cola lon 330ml mat lanh', price: 15000, category: 'nuoc' },
-      { name: 'Nuoc chanh day', description: 'Chanh day tuoi, ngot chua sang khoai', price: 20000, category: 'nuoc' },
+      { name: 'Nước cam ép', description: 'Cam tươi ép nguyên chất, giàu vitamin C', price: 25000, category: 'nuoc' },
+      { name: 'Sinh tố bơ', description: 'Bơ sáp dẻo béo, thêm sữa đặc', price: 30000, category: 'nuoc' },
+      { name: 'Coca Cola', description: 'Coca Cola lon 330ml mát lạnh', price: 15000, category: 'nuoc' },
+      { name: 'Nước chanh dây', description: 'Chanh dây tươi, ngọt chua sảng khoái', price: 20000, category: 'nuoc' },
 
-      // Lau
-      { name: 'Lau Thai Tom Yum', description: 'Lau Thai chua cay, hai san tuoi ngon (2-3 nguoi)', price: 199000, category: 'lau', isPromotion: true, promotionPrice: 159000, promotionEnd: promoEnd },
-      { name: 'Lau ga la e', description: 'Ga ta nau la e thom nuc, rau rung (2-3 nguoi)', price: 180000, category: 'lau' },
-      { name: 'Lau hai san', description: 'Lau hai san tong hop: tom, muc, ca, ngheu (3-4 nguoi)', price: 250000, category: 'lau' },
-      { name: 'Lau bo nhung dam', description: 'Bo My thai lat mong, nhung dam thanh ngot (2-3 nguoi)', price: 220000, category: 'lau' }
+      // Lẩu
+      { name: 'Lẩu Thái Tom Yum', description: 'Ẩu Thái chua cay, hải sản tươi ngon (2-3 người)', price: 199000, category: 'lau', isPromotion: true, promotionPrice: 159000, promotionEnd: promoEnd },
+      { name: 'Lẩu gà lá é', description: 'Gà ta nấu lá é thơm nức, rau rừng (2-3 người)', price: 180000, category: 'lau' },
+      { name: 'Lẩu hải sản', description: 'Lẩu hải sản tổng hợp: tôm, mực, cá, nghêu (3-4 người)', price: 250000, category: 'lau' },
+      { name: 'Lẩu bò nhúng dấm', description: 'Bò Mỹ thái lát mỏng, nhúng dấm thanh ngọt (2-3 người)', price: 220000, category: 'lau' }
     ];
 
     await Food.insertMany(foods);
