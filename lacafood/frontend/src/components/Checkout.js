@@ -76,7 +76,7 @@ const Checkout = () => {
 
             {orderSuccess.paymentMethod === 'qr' && (
               <div className="qr-payment-section">
-                <h2>Quét mã QR để thanh toán</h2>
+                <h2>📱 Quét mã QR để thanh toán</h2>
                 <div className="qr-code-box">
                   <QRCodeSVG
                     value={`LacaFood|DH${orderSuccess._id.slice(-8)}|${orderSuccess.total}|Thanh toan don hang LacaFood`}
@@ -84,8 +84,28 @@ const Checkout = () => {
                     level="H"
                   />
                 </div>
-                <p className="qr-info">Nội dung chuyển khoản: <strong>LF{orderSuccess._id.slice(-8)}</strong></p>
-                <p className="qr-info">Số tiền: <strong>{formatPrice(orderSuccess.total)}</strong></p>
+                <div className="bank-info">
+                  <div className="bank-info-row">
+                    <span>Ngân hàng:</span>
+                    <span>Vietcombank</span>
+                  </div>
+                  <div className="bank-info-row">
+                    <span>Chủ tài khoản:</span>
+                    <span>LACAFOOD CO LTD</span>
+                  </div>
+                  <div className="bank-info-row">
+                    <span>Số tài khoản:</span>
+                    <span>1234 5678 9012</span>
+                  </div>
+                  <div className="bank-info-row">
+                    <span>Nội dung CK:</span>
+                    <span>LF{orderSuccess._id.slice(-8)}</span>
+                  </div>
+                  <div className="bank-info-row">
+                    <span>Số tiền:</span>
+                    <span>{formatPrice(orderSuccess.total)}</span>
+                  </div>
+                </div>
               </div>
             )}
 
