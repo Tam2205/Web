@@ -44,10 +44,10 @@ const seedDB = async () => {
 
     const foods = [
       // Mon nhau
-      { name: 'Gà chiên giòn', description: 'Gà chiên giòn rưm tẩm mắm ớt cay nồng, thơm lừng', image: "", price: 89000, category: 'mon-nhau', isPromotion: true, promotionPrice: 69000, promotionEnd: promoEnd },
-      { name: 'Canh gà chiên nước mắm', description: 'Canh gà chiên vàng ươm, sốt nước mắm tỏi ớt', image: "", price: 75000, category: 'mon-nhau' },
+      { name: 'Mực khô nướng', description: 'Mực khô nướng trên cồn, xé tơi, chấm tương ớt; vị ngọt, dai và thơm nồng.', image: "", price: 89000, category: 'mon-nhau', isPromotion: true, promotionPrice: 69000, promotionEnd: promoEnd },
+      { name: 'Trâu gác bếp', description: 'Thịt trâu hun khói dai, ngọt, thơm mùi mắc khén và hạt dỗi đặc trưng vùng cao.', image: "", price: 75000, category: 'mon-nhau' },
       { name: 'Bò lúc lắc', description: 'Bò Úc lúc lắc mềm ngọt, kèm rau sống', image: "", price: 120000, category: 'mon-nhau', isPromotion: true, promotionPrice: 95000, promotionEnd: promoEnd },
-      { name: 'Mực chiên giòn', description: 'Mực tươi chiên giòn, chấm muối tiêu chanh', image: "", price: 95000, category: 'mon-nhau' },
+      { name: 'Đậu hũ lướt ván', description: 'Đậu hũ tươi chiên vàng lớp vỏ nhưng bên trong vẫn mềm mịn như tan trong miệng.', image: "", price: 95000, category: 'mon-nhau' },
 
       // Trà sữa
       { name: 'Trà sữa trân châu đường đen', description: 'Trà sữa thơm béo, trân châu đường đen Q dẻo', image: "", price: 35000, category: 'tra-sua', isPromotion: true, promotionPrice: 25000, promotionEnd: promoEnd },
