@@ -93,6 +93,11 @@ const Navbar = () => {
                       ⚙️ Quản trị
                     </Link>
                   )}
+                  {user.role === 'shipper' && (
+                    <Link to="/shipper" className="dropdown-item" onClick={() => { setUserMenuOpen(false); setMobileOpen(false); }}>
+                      🚚 Đơn giao hàng
+                    </Link>
+                  )}
                   <button className="dropdown-item logout-btn" onClick={handleLogout}>
                     🚪 Đăng xuất
                   </button>

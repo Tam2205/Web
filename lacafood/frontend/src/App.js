@@ -11,6 +11,7 @@ import Register from './components/Register';
 import OrderHistory from './components/OrderHistory';
 import AdminDashboard from './components/AdminDashboard';
 import AdminFoodForm from './components/AdminFoodForm';
+import ShipperDashboard from './components/ShipperDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import Footer from './components/Footer';
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/admin" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
           <Route path="/admin/food/new" element={<ProtectedRoute adminOnly><AdminFoodForm /></ProtectedRoute>} />
           <Route path="/admin/food/:id/edit" element={<ProtectedRoute adminOnly><AdminFoodForm /></ProtectedRoute>} />
+          <Route path="/shipper" element={<ProtectedRoute shipperOnly><ShipperDashboard /></ProtectedRoute>} />
         </Routes>
       </main>
       <Footer />
