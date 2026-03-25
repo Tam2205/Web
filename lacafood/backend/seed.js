@@ -82,6 +82,8 @@ const seedDB = async () => {
         image:"https://th.bing.com/th/id/OIP.SuQcy1KKwUgGAHNzbs6iRwHaE8?w=254&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",price: 30000, category: 'chien', isPromotion: true, promotionPrice: 22000, promotionEnd: promoEnd },
       { name: 'Cá viên chiên', description: 'Cá viên chiên giòn, chấm tương ớt', 
         image:"https://th.bing.com/th/id/OIP.SuQcy1KKwUgGAHNzbs6iRwHaE8?w=254&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",price: 25000, category: 'chien' },
+      {name:"Bánh xào",description:"Bánh xèo giòn rụm, nhân tôm thịt, ăn kèm rau sống và nước mắm chua ngọt",
+        image:"https://www.tastingtable.com/img/gallery/bnh-xo-the-delectable-vietnamese-crepes-you-should-know/l-intro-1666117324.jpg",price:100000 , category:'chien'},
 
       // Pho bun
       { name: 'Phở bò tái', description: 'Phở bò tái nạm gầu, nước dùng hầm xương 12 tiếng',
